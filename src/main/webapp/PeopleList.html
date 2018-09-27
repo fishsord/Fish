@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>在线人员</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+	<div>
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<a class="navbar-brand" href="showIndex.do">人名列表</a>
+				</div>
+
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse"
+					id="bs-example-navbar-collapse-1">
+					<form 
+						class="navbar-form navbar-left">
+						<div class="form-group">
+							<input type="text" name="iname" class="form-control"
+								placeholder="请输入人名"> <input type="text" name="isex"
+								class="form-control" placeholder="请输入性别"> <input
+								type="number" name="iage" class="form-control"
+								placeholder="请输入年龄">
+						</div>
+						<button type="button" onclick="" class="btn btn-default">新增</button>
+					</form>
+				</div>
+				<!-- /.navbar-collapse -->
+			</div>
+			<!-- /.container-fluid -->
+		</nav>
+	<!-- 显示的地方-->
+		<div id="">
+	
+		</div>
+	<!-- end -->
+		<div class="row">
+			<div class="col-md-12">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>名字</th>
+							<th>性别</th>
+							<th>年龄</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody id ="people">
+							<tr>
+								<td>${show.peopleId}</td>
+								<td>${show.peopleName}</td>
+								<td>${show.peopleSex}</td>
+								<td>${show.peopleAge}</td>
+								<td><a href="deletePeople.do?peopleId=${show.peopleId}"><span class="glyphicon glyphicon-remove"></span>删除</a></td>
+							</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+			response.sendRedirect("showIndex.do"); 
+			<div id="AlertBox"></div>
+			
+
+	</div>
+</body>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+/* 一开始显示的页面 */
+ function() {
+	 doShowPeople();
+}
+function doInsertPeople() {
+	var iname=$("#iname").val();
+	var isex=$("#isex").val();
+	var iage=$("#iage").val();
+	$.ajax(){
+		url:"insertPeople.ajax" ,/* 控制器*/
+		data:{iname:iname,
+				isex:isex,
+				iage:iage
+			},
+		type:"post",
+		datatype:"text",
+		success:function(result) {
+			switch(result) 
+			case 'success': 
+				successAlert();
+				doShowPeople();
+					break;
+			case 'error': 
+				errorAlert();
+					break;
+		default: errorAlert();
+					break;
+			
+		},
+		error:function() {
+			errorAlert();
+		}
+	}
+}
+function doShowPeople() {
+	$.ajax() {
+		url:"",
+		data:"",
+		type:"POST",
+		datatype:"text",
+		success:function (result) {
+			
+		},
+		error:funcction() {
+			
+		}
+	}
+}
+function successAlert() {
+	$("#AlertBox").html("<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"aria-label="Close"><span aria-hidden="true">&times;</span></button>提示：操作成功</div>");
+}
+function errorAlert() {
+	$("#AlertBox").html("<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"aria-label="Close"><span aria-hidden="true">&times;</span></button>	警告：操作失败</div>");
+}
+
+</script>
+</html>
